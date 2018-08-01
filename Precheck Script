@@ -1,0 +1,32 @@
+Write-Output "   "  | Out-File D:\Result.txt
+
+
+Write-Output "======================================================================" | Out-File -Append D:\Result.txt
+
+Write-Output "1) The Lumension Service Status is below " | Out-File -Append D:\Result.txt
+
+Get-Service -Name WSearch  | Out-File -Append D:\Result.txt
+
+Write-Output "======================================================================" | Out-File -Append D:\Result.txt
+
+
+Write-Output "2) Below are the local disk space available" | Out-File -Append D:\Result.txt
+
+
+gwmi win32_logicaldisk | Format-Table DeviceId, MediaType, @{n="Size";e={[math]::Round($_.Size/1GB,2)}},@{n="FreeSpace";e={[math]::Round($_.FreeSpace/1GB,2)}} | Out-File -Append D:\Result.txt
+
+Write-Output "======================================================================" | Out-File -Append D:\Result.txt
+
+Write-Output "3) The Windows server is running in the below version"`n`n`n`n | Out-File -Append D:\Result.txt 
+
+(Get-WmiObject -class Win32_OperatingSystem).Caption | Out-File -Append D:\Result.txt
+
+
+Write-Output "======================================================================" | Out-File -Append D:\Result.txt
+
+
+Write-Output "4) Last System Boot Time is below"`n`n`n`n | Out-File -Append D:\Result.txt 
+
+Get-CimInstance -ClassName win32_operatingsystem | select csname, lastbootuptime | Out-File -Append D:\Result.txt
+
+Write-Output "======================================================================" | Out-File -Append D:\Result.txt
